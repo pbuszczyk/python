@@ -22,9 +22,9 @@ for line in text_file:
     total_no_of_files = 0
     total_size = 0
 
-    subprocess.call("net use Z: \\\\zmy12nap01\\" + dir_in_consideration.strip(), shell=True)
+    subprocess.Popen(["sudo","mount","-t","nfs",+ dir_in_consideration.strip(),"data_dir"])
 
-    for root, dirs, files in os.walk("Z:\\"):
+    for root, dirs, files in os.walk("data_dir"):
       path = root.split(os.sep)
       for file in files:
         try:
@@ -58,5 +58,5 @@ for line in text_file:
 
     print('Percentage of files accessed: %f' %total_percentage)
     print('Total no. of files:%d' %total_no_of_files)
-    subprocess.call("net use Z: /d", shell=True)
+    subprocess.Popen(["sudo","umount","data_dir"])
 text_file.close()
